@@ -86,4 +86,17 @@ module.exports = (app, knex, jwt, SECRET_KEY) => {
         })
     })
 
+    // search the events based on city and event name 
+    app.get("/search_events",(req,res) =>{
+       
+        knex.select('* ').table('events').where('city',req.query.city ).orWhere({'event_name':req.query.event_name}).orderBy('event_name').then((data)=> {
+                res.send(data)
+            })
+            .catch((err) =>{
+                res.send(err)
+            })
+            
+        })
+    
+
 };
